@@ -1,15 +1,17 @@
 import sys
 import psycopg2
+import logging
+from scripts.db_cred import source_db_cred
 from scripts.db_funcs import get_table_names, extract_db
 from scripts.functions import extract_csv, create_csv_path, create_db_path, save_names, list_csvs
 from scripts.constants import sql_PG_TABLE_NAMES_QUERY
 
 def execute_step_1(user_date):
-    print("\n*** INITIALIZING STEP 1 ***\n")
+    logging.info("\n*** INITIALIZING STEP 1 ***\n")
 
     try:
-        print("Trying to connect to source database...")
-        conn = psycopg2.connect("dbname='northwind' user='northwind_user' host='localhost' password='thewindisblowing'")
+        logging.info("Trying to connect to source database...")
+        conn = psycopg2.connect(source_db_cred)
         cursor = conn.cursor()
         print(f"Success: {conn}\n")
     except Exception as err:

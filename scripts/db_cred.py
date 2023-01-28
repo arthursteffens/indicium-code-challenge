@@ -13,14 +13,16 @@ class DBCred():
 
             if service == "pg_db":
                 self.db_name = env["POSTGRES_DB"]
+                self.db_prefix = "POSTGRES"
             if service == "mysql_db":
                 self.db_name = env["MYSQL_DATABASE"]
+                self.db_prefix = "MYSQL"
 
             self.dsn =  f"""
                 host={"localhost"}
                 dbname={self.db_name}
-                user={env["POSTGRES_USER"]}
-                password={env["POSTGRES_PASSWORD"]}
+                user={env[f"{self.db_prefix}_USER"]}
+                password={env[f"{self.db_prefix}_PASSWORD"]}
                 port={yml["services"][service]["ports"][0].split(":")[0]}
             """
         except Exception as e:

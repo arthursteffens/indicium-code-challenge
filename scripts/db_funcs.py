@@ -1,26 +1,39 @@
 import pandas as pd
 import numpy as np
+import psycopg2
+import logging
+import sqlalchemy
 
 class Database():
     def __init__(self, db_cred):
         self.name = db_cred.db_name
         self.credentials_dsn = db_cred.dsn
-        self.conn = self._connect()
-        self.cur = self.conn.cursor()
 
-    def get_table_names(self, cursor, sql):
+        self.engine = 
+
+    #     self.conn = self._connect()
+    #     self.cur = self.conn.cursor()
+
+    # def _connect(self):
+    #     try:
+    #         return psycopg2.connect(self.credentials_dsn)
+    #     except Exception as e:
+    #         logging.error(f"Error connecting to database: {e}")
+
+    def get_table_names(self, sql):
         """
             Retrieve name of tables from source DB
             return 'list' : 'table_names'
         """
         try:
-            cursor.execute(sql)
-            results = cursor.fetchall()
+            self.cur.execute(sql)
+            results = self.cur.fetchall()
             table_names = [table_name[0] for table_name in results]
-            print(f"Got {len(table_names)} tables: {table_names} \n")
+            logging.info(f"Got {len(table_names)} tables: {table_names} \n")
             return table_names
         except Exception as e:
-            print(f"Error retrieving table names, check database status or SQL syntax: \n{e}")
+            logging.error(f"Error retrieving table names, check database status or SQL syntax: \n{e}")
+
 
 
     def extract_db(cursor, table_names, user_date):
@@ -85,3 +98,8 @@ class Database():
         results = cursor.fetchall()
         df = pd.DataFrame(results, columns=cols)
         df.to_csv(path, index=False, sep=',', encoding='utf-8')
+
+    def close_connection(self):
+        """Close the connection with the database."""
+        self.cur.close()
+        self.conn.close()

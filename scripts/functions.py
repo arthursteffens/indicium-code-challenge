@@ -132,8 +132,8 @@ def read_table_list(user_date):
         return 'list' : 'table_list'
     """
     table_list = list()
-    with open(f"./data/track/{user_date}/tables.txt", "r") as f:
-        for table in f:
+    with open(f"./data/track/{user_date}/tables.txt", "r") as tables_file:
+        for table in tables_file:
             line = table[:-1]
             table_list.append(line)
     return table_list

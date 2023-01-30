@@ -1,8 +1,11 @@
-import pymysql
 import sys
+from scripts.db_cred import DBCred
+from scripts.db_funcs import Database
 from scripts.db_funcs import insert_into_mysql, final_query
 from scripts.functions import read_csv_list, files_are_ok, read_table_list
 from scripts.constants import sql_FINAL_QUERY
+
+dest_db_cred = DBCred("mysql_db")
 
 def execute_step_2(user_date):
     
@@ -23,20 +26,24 @@ def execute_step_2(user_date):
         # Establish connection with MySQL
         print("Trying to connect to destination database...")
         try:
-            conn = pymysql.connect(host='localhost', port=3306, user="user", password="userpass")
-            cursor = conn.cursor()
+            dest_db = Database(dest_db_cred)
+
+
+
+            # conn = pymysql.connect(host='localhost', port=3306, user="user", password="userpass")
+            # cursor = conn.cursor()
             print(f"Success: {conn}\n")
         except Exception as err:
             sys.exit(f"Destination DB (MySQL) connection error:\n {err} \nError type: {type(err)} \nCheck the credentials or status of the database.")
         
-        cursor.execute("USE mysql_northwind")
+        # cursor.execute("USE mysql_northwind")
 
         # Iterate over list of tables
         for table in table_list:
             source = "postgres"
-            success = insert_into_mysql(source, table, user_date, cursor)
+            success = dest_db.insert_into_mysql(source, table, user_date)
             if success:
-                conn.commit()
+                connection.commit()
                 print(f"Table {table} loaded into destination database.")
 
         # Iterate over list of csv files on CSV folder

@@ -1,6 +1,6 @@
 import yaml
 import logging
-
+import sys
 
 with open("docker-compose.yml", "r") as file:
     yml = yaml.safe_load(file)
@@ -23,4 +23,5 @@ class DBCred():
             self.conn_str = f"{self.eng_driver}://{self.user}:{self.passwd}@{self.host}:{self.port}/{self.db_name}"
 
         except Exception as e:
-            logging.error(f"Invalid docker-compose.yml: {e}")
+            logging.error(f"Invalid file docker-compose.yml: {e}")
+            sys.exit(0)

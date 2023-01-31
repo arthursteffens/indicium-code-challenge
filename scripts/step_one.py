@@ -13,9 +13,12 @@ def execute_step_1(user_date):
     try:
         logging.info("Trying to connect to source database...")
         source_db = Database(source_db_cred)
-        logging.info(f"Success: {source_db}\n")
+        conn = source_db.engine.connect()
+        logging.info(f"Success: {source_db.engine}\n")
+        conn.close()
     except Exception as err:
-        sys.exit(f"Source DB (Postgres) connection error:\n {err} \nError type: {type(err)} \nCheck the credentials or status of the database.")
+        logging.error(f"Source DB (Postgres) connection error:\n {err} \nError type: {type(err)} \nCheck the credentials or status of the database.")
+        sys.exit(0)
 
     # Retrieve the names of tables in Postgres DB
     logging.info("Retrieving table and CSV names...\n")

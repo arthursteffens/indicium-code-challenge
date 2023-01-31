@@ -4,7 +4,7 @@ from scripts.constants import INIT_MSG
 from scripts.functions import get_user_date
 import logging
 
-logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(asctime)s: %(message)s", datefmt='%d-%b-%y %H:%M:%S')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", datefmt='%Y-%m-%d %H:%M:%S')
 
 if __name__ == "__main__":
 

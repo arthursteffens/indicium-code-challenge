@@ -25,13 +25,16 @@ def execute_step_2(user_date):
     if files_are_ok(user_date, table_list, csv_list):
 
         logging.info("*** INITIALIZING STEP 2 ***\n")
-        # Establish connection with MySQL
+        # Establish connection with destiny database
         logging.info("Trying to connect to destination database...")
         try:
             dest_db = Database(dest_db_cred)
-            logging.info(f"Success: {dest_db}\n")
+            conn = dest_db.engine.connect()
+            logging.info(f"Success: {dest_db.engine}\n")
+            conn.close()
         except Exception as err:
-            sys.exit(f"Destination DB (MySQL) connection error:\n {err} \nError type: {type(err)} \nCheck the credentials or status of the database.")
+            logging.error(f"Destination DB connection error:\n {err} \n\nCheck the credentials or status of the database.")
+            sys.exit(0)
 
         # Iterate over list of tables
         source = "postgres"
@@ -59,10 +62,10 @@ def execute_step_2(user_date):
             logging.info(f"Final query generated into /data/track/{user_date}/final_query.csv")
         except Exception as e:
             logging.error(f"Error generating final query: {e}")
-
         
         logging.info(f"*** STEP 2 for {user_date} FINISHED ***\n")
     else:
-        sys.exit("There are inconsistencies in some files. Please execute the pipeline from the beggining.")
+        logging.error("There are inconsistencies in some files. Please execute the pipeline from the beggining.")
+        sys.exit(0)
 
 

@@ -13,7 +13,7 @@ services:
     ports:
       - 5432:5432
     networks:
-      - arthur-compose-network
+      - compose-network
 
   pg_db_out:
     image: postgres:12
@@ -27,8 +27,8 @@ services:
     ports:
       - 5433:5432
     networks:
-      - arthur-compose-network
+      - compose-network
     
 networks: 
-  arthur-compose-network:
+  compose-network:
     driver: bridge

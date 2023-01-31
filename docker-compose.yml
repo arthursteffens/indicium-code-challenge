@@ -2,6 +2,7 @@ version: '3'
 
 services:
   pg_db_in:
+    container_name: db_in
     image: postgres:12
     environment:
       POSTGRES_DB: northwind
@@ -16,6 +17,7 @@ services:
       - compose-network
 
   pg_db_out:
+    container_name: db_out
     image: postgres:12
     environment:
       POSTGRES_DB: pg_db_out

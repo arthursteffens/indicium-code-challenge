@@ -3,7 +3,7 @@ This section describes my solution to this Indicium Tech Code Challenge.
 
 ## Usage
 Necessary tools:
-- Python (tested in version 3.11)
+- Python (version 3.11)
 - pip (package manager)
 - Docker (docker-compose)
 
@@ -11,15 +11,11 @@ Follow this steps to properly run this script:
 
 - Clone this repository and navigate into it.
 - In repository folder, run ```pip install -r requirements.txt``` on terminal
-- Run ```docker-compose up -d``` on terminal (wait until Postgres database populate tables. Run ```docker logs code-challenge_pg_db_1``` and check if the last line is something like this: _LOG:  database system is ready to accept connections_
+- Run ```docker-compose up -d``` on terminal (wait until Postgres database populate tables. Run ```docker logs db_in``` and check if the last line is something like this: _LOG:  database system is ready to accept connections_
 - After both containers are up, run ```python pipeline.py```
 
 ## Notes
 - The final query is already in this repository (*./data/final_query.csv*), but with the full pipeline execution, it will be generated and saved into _./data/track/YYYY-MM-DD/_
-
-## Things to improve
-- Create classes to generalize connections with databases.
-- Refactor using SOLID principles (OOP).
 
 # code-challenge
 Indicium code challenge for Software Developer focusing on data projects

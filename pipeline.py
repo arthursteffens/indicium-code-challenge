@@ -2,6 +2,9 @@ from scripts.step_one import execute_step_1
 from scripts.step_two import execute_step_2
 from scripts.constants import INIT_MSG
 from scripts.functions import get_user_date
+import logging
+
+logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(asctime)s: %(message)s", datefmt='%d-%b-%y %H:%M:%S')
 
 if __name__ == "__main__":
 

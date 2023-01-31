@@ -10,7 +10,7 @@ Option: """
 
 # User date input
 DATE_MSG = """
-Type the date you want to extract data from (leave blank to use today's date): """
+Type the date you want to extract the data from, leave blank to use today's date ("YYYY-MM-DD"): """
 
 # SQL query to get the names of the tables from the source database
 sql_PG_TABLE_NAMES_QUERY = """
